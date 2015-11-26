@@ -100,7 +100,7 @@
   },
   {
     "op": "core/column-addition",
-    "description": "Create column Telize at index 1 based on column IP using expression grel:\"http://www.telize.com/geoip/\"+value",
+    "description": "Create column Telize at index 1 based on column IP using expression grel:\"http://www.ip-api.com/json/\"+value",
     "engineConfig": {
       "mode": "row-based",
       "facets": [
@@ -128,7 +128,7 @@
     "newColumnName": "Telize",
     "columnInsertIndex": 1,
     "baseColumnName": "IP",
-    "expression": "grel:\"http://www.telize.com/geoip/\"+value",
+    "expression": "grel:\"http://www.ip-api.com/json/\"+value",
     "onError": "set-to-blank"
   },
   {
