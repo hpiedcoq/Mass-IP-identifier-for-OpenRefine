@@ -309,5 +309,50 @@
     "description": "Rename column json lookup to IP Lookup",
     "oldColumnName": "json lookup",
     "newColumnName": "IP Lookup"
+  },
+  {
+    "op": "core/column-addition",
+    "description": "Create column Tor at index 1 based on column IP using expression grel:\"https://www.dan.me.uk/torcheck?ip=\"+value",
+    "engineConfig": {
+      "mode": "row-based",
+      "facets": []
+    },
+    "newColumnName": "Tor",
+    "columnInsertIndex": 1,
+    "baseColumnName": "IP",
+    "expression": "grel:\"https://www.dan.me.uk/torcheck?ip=\"+value",
+    "onError": "set-to-blank"
+  },
+  {
+    "op": "core/column-addition-by-fetching-urls",
+    "description": "Create column Tor check at index 2 by fetching URLs based on column Tor using expression grel:value",
+    "engineConfig": {
+      "mode": "row-based",
+      "facets": []
+    },
+    "newColumnName": "Tor check",
+    "columnInsertIndex": 2,
+    "baseColumnName": "Tor",
+    "urlExpression": "grel:value",
+    "onError": "store-error",
+    "delay": 2087
+  },
+  {
+    "op": "core/text-transform",
+    "description": "Text transform on cells in column Tor check using expression grel:value.partition(\"The IP address is\")[2].partition(\"<\")[0]",
+    "engineConfig": {
+      "mode": "row-based",
+      "facets": []
+    },
+    "columnName": "Tor check",
+    "expression": "grel:value.partition(\"The IP address is\")[2].partition(\"<\")[0]",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10
+  },
+  {
+    "op": "core/column-removal",
+    "description": "Remove column Tor",
+    "columnName": "Tor"
   }
 ]
